@@ -1,5 +1,6 @@
+import React from 'react';
 import { lifecycle, compose } from 'recompose';
-import logo from './logo.svg';
+import logo from './img/logo.svg';
 import './App.css';
 
 const App = () => (
@@ -31,7 +32,6 @@ const enhance = compose(
     async componentDidMount() {
       const options = process.env.NODE_ENV === 'development' ? { headers: { 'x-api-key': process.env.REACT_APP_API_KEY } } : {};
       await fetch(
-        // 'https://sushirowaiting.tszyanalau.com/api/healthCheck',
         `${process.env.REACT_APP_API_URL}/api/healthCheck`,
         options,
       );

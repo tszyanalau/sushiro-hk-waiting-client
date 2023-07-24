@@ -6,6 +6,7 @@ module.exports = {
   extends: [
     'airbnb',
     'plugin:react/jsx-runtime',
+    'plugin:react/recommended',
   ],
   overrides: [
     {
@@ -32,5 +33,6 @@ module.exports = {
         namedComponents: 'arrow-function',
         unnamedComponents: 'arrow-function',
       }],
+    'max-len': 0,
   },
 };
