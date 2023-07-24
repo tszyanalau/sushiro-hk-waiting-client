@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    'jest/globals': true,
   },
   extends: [
     'airbnb',
@@ -34,5 +35,12 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       }],
     'max-len': 0,
+    'object-curly-newline': 0,
+    'import/no-extraneous-dependencies': 0,
+    'react/prop-types': 0,
+    'react/jsx-filename-extension': 0,
   },
+  plugins: [
+    'jest',
+  ],
 };
