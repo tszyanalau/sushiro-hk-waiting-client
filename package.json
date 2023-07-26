@@ -1,6 +1,6 @@
 {
   "name": "sushiro-hk-waiting-client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.2",
