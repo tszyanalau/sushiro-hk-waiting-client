@@ -1,16 +1,18 @@
 const path = require('path');
+const { EnvironmentPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const publicDir = 'public/';
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
-  const mode = isProduction ? 'production' : 'development';
   return {
-    mode,
+    mode: 'production',
     entry: '/src/index.js', // main js
     output: {
       path: path.resolve(__dirname, 'dist'), // output folder
@@ -36,6 +38,14 @@ module.exports = (env, argv) => {
           ],
         },
         {
+          test: /\.s[ac]ss$/i,
+          use: [
+            'style-loader',
+            'css-loader',
+            'sass-loader',
+          ],
+        },
+        {
           test: /\.(png|jpg|jpeg|gif|svg|ico|webp)$/i,
           type: 'asset/resource',
         },
@@ -47,11 +57,15 @@ module.exports = (env, argv) => {
           test: /\.(woff|woff2|eot|ttf|otf)$/i,
           type: 'asset/resource',
         },
+        {
+          test: /\.css$/,
+          use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        },
       ],
     },
     plugins: [
       new Dotenv({
-        path: `./.env.${mode}`,
+        path: `./.env.production${isProduction ? '' : '.local'}`,
       }),
       new HtmlWebpackPlugin({
         template: `${publicDir}index.html`, // base html
@@ -83,14 +97,20 @@ module.exports = (env, argv) => {
           display: 'standalone',
           theme_color: '#000000',
           background_color: '#ffffff',
-        }
-        ,
+        },
       }),
       new CopyPlugin({
         patterns: [
           { from: `${publicDir}**/*.{png,ico}`, to: './' },
         ],
       }),
+      isProduction && new EnvironmentPlugin(['REACT_APP_GOOGLE_API_KEY']),
+      new MiniCssExtractPlugin(),
     ],
+    optimization: {
+      minimizer: [
+        new CssMinimizerPlugin(),
+      ],
+    },
   };
 };

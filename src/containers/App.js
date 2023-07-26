@@ -24,6 +24,7 @@ const App = ({ t }) => (
       >
         Learn React
       </a>
+      {process.env.REACT_APP_GOOGLE_API_KEY}
     </header>
   </div>
 );

@@ -1,5 +1,7 @@
 version: 0.2
-
+env:
+  secrets-manager:
+    REACT_APP_GOOGLE_API_KEY: arn:aws:secretsmanager:ap-northeast-1:607456523830:secret:prod/SushiroHKWaiting/GMapApiKey-IW8jBM
 phases:
   install:
     commands:

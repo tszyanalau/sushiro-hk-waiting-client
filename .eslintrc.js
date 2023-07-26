@@ -26,6 +26,9 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
+  globals: {
+    google: 'readonly',
+  },
   rules: {
     'no-unused-vars': 'warn',
     'react/function-component-definition': [
@@ -39,6 +42,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'react/prop-types': 0,
     'react/jsx-filename-extension': 0,
+    'no-new': 0,
   },
   plugins: [
     'jest',
