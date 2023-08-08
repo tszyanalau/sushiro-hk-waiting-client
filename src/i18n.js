@@ -1,22 +1,29 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import detector from 'i18next-browser-languagedetector';
-import ja from './translations/ja.json';
-import zhHK from './translations/zh-HK.json';
+import _ from 'lodash';
+import config from './config.json';
+
+const resources = {};
+
+_.reduce(config.languages, (result, lang) => {
+  let translation;
+  try {
+    translation = require(`./translations/${lang}.json`);
+  } catch (e) {
+    console.log(e);
+    throw new Error(`unable to retrieve translation: ${lang}`);
+  }
+  _.set(result, `${lang}.translation`, translation);
+  return result;
+}, resources);
 
 i18n
   .use(detector)
   .use(initReactI18next)
   .init({
-    resources: {
-      'zh-HK': {
-        translation: zhHK,
-      },
-      ja: {
-        translation: ja,
-      },
-    },
-    fallbackLng: 'zh-HK',
+    resources,
+    fallbackLng: config.languages[0],
     interpolation: {
       escapeValue: false,
     },
