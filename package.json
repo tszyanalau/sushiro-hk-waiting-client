@@ -37,6 +37,7 @@
     "build-local": "npx webpack --mode development",
     "build:run": "npm run build-local && serve -s dist",
     "lint": "eslint src --ext js",
+    "jest": "react-scripts test --watchAll=false",
     "test": "npm run lint && react-scripts test",
     "prepare": "husky install"
   },
