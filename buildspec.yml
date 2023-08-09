@@ -6,10 +6,12 @@ phases:
   install:
     commands:
       - npm install --legacy-peer-deps
+      - dnf install -y xorg-x11-server-Xvfb gtk3-devel nss alsa-lib #cypress linux prerequisites
   pre_build:
     commands:
       - npm run lint
       - npm run jest
+      - npm run cypress
   build:
     commands:
       - npm run build

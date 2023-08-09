@@ -24,3 +24,7 @@ yarn-debug.log*
 yarn-error.log*
 
 deploy.sh
+
+cypress/screenshots/
+cypress/videos/
+cypress/fixtures/

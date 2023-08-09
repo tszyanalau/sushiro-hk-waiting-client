@@ -28,6 +28,8 @@ module.exports = {
   },
   globals: {
     google: 'readonly',
+    cy: 'readonly',
+    Cypress: 'readonly',
   },
   rules: {
     'no-unused-vars': 'warn',
@@ -55,5 +57,6 @@ module.exports = {
   },
   plugins: [
     'jest',
+    'cypress',
   ],
 };
