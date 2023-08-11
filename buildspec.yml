@@ -17,7 +17,7 @@ phases:
       - npm run build
   post_build:
     commands:
-      - aws s3 rm s3://sushiro-hk-waiting-client --recursive
+      - aws s3 rm s3://sushirowaiting-map.tszyanalau.com --recursive
 artifacts:
   files:
     - '**/*'
