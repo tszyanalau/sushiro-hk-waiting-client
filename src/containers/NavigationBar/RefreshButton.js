@@ -7,14 +7,14 @@ import { setResetTimer } from '../../reducers/storeMap';
 
 const RefreshButton = () => {
   const { refetch } = useGetStoreListQuerySubscription();
-  const { isLoading } = useGetStoreListQueryStateResult();
+  const { isLoading, isFetching } = useGetStoreListQueryStateResult();
   const dispatch = useDispatch();
   const refresh = () => {
     refetch();
     dispatch(setResetTimer(true));
   };
   return (
-    <Nav.Link onClick={refresh} className="text-primary refresh-btn" disabled={isLoading}>
+    <Nav.Link onClick={refresh} className="text-primary refresh-btn" disabled={isLoading || isFetching}>
       <Icon type="arrow-clockwise" className="fs-6" />
     </Nav.Link>
   );

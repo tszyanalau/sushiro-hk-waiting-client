@@ -19,7 +19,7 @@ const StoreInfo = ({ t, mobile }) => {
     dispatch(setShowInfo(false));
     dispatch(setStoreId(null));
   };
-  const { isSuccess, data, isLoading } = useGetStoreListQueryStateResult();
+  const { isSuccess, data, isLoading, isFetching } = useGetStoreListQueryStateResult();
   const { storeId, showInfo } = useSelector((state) => state.storeMap);
   const { refetch } = useGetStoreListQuerySubscription();
   if (isSuccess && storeId !== null) {
@@ -44,7 +44,7 @@ const StoreInfo = ({ t, mobile }) => {
           </div>
           <div className="text-secondary">
             <div>{getDisplayTime(data.timestamp)}</div>
-            <Button variant="link" onClick={refetch} className="refresh-btn" disabled={isLoading}>
+            <Button variant="link" onClick={refetch} className="refresh-btn" disabled={isLoading || isFetching}>
               <Icon type="arrow-clockwise" />
               {t('update')}
             </Button>

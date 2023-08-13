@@ -1,13 +1,13 @@
 const data = require('../../src/mockData/store.json');
 
-const mockResponseBody = { body: { ...data, timestamp: 1691312155034 } };
+const mockResponse = { delay: 1000, body: { ...data, timestamp: 1691312155034 } };
 
 describe('Google Map Test', () => {
   beforeEach(() => {
     cy.window().then((win) => {
       win.localStorage.setItem('i18nextLng', 'zh-HK');
     });
-    cy.intercept('GET', `${Cypress.env('apiUrl')}/store`, mockResponseBody).as('apiRequest');
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/store`, mockResponse).as('apiRequest');
     cy.visit('/');
   });
 
@@ -51,7 +51,6 @@ describe('Google Map Test', () => {
   });
 
   it('should hide respective store information after clicking the close button', () => {
-    // cy.intercept('GET', `${Cypress.env('apiUrl')}/store`, mockResponseBody).as('apiRequest');
     cy.wait('@apiRequest');
     cy.contains('18').click();
     cy.get('[role="dialog"].offcanvas-end button[aria-label="Close"]').click();
@@ -59,7 +58,6 @@ describe('Google Map Test', () => {
   });
 
   it('should fetch data after clicking the refresh button', () => {
-    // cy.intercept('GET', `${Cypress.env('apiUrl')}/store`, mockResponseBody).as('apiRequest');
     cy.wait('@apiRequest');
     cy.contains('18').click();
     cy.get('.offcanvas-end button').contains('更新').click();

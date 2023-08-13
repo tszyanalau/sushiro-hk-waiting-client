@@ -16,7 +16,7 @@ import config from '../../config.json';
 import { getTier, getDisplayTime, getCenter, getBounds } from '../../service/map';
 
 const MapContainer = ({ t }) => {
-  const { isSuccess, isError, data } = useGetStoreListQuery();
+  const { isSuccess, isError, data, isFetching, status } = useGetStoreListQuery();
   const { refetch } = useGetStoreListQuerySubscription();
   const dispatch = useDispatch();
   const { storeId, selectedTiers } = useSelector((state) => state.storeMap);
@@ -28,7 +28,8 @@ const MapContainer = ({ t }) => {
     console.error(e);
     hasMapError = true;
   };
-  if (isSuccess) {
+  const success = isSuccess && status === 'fulfilled';
+  if (success) {
     let { stores } = data;
     let map;
     const loader = new Loader({
@@ -95,11 +96,17 @@ const MapContainer = ({ t }) => {
   }
   const { showInfo } = useSelector((state) => state.storeMap);
   const error = hasMapError || isError;
+  const loading = !mapLoaded || isFetching;
+  const getStatus = () => {
+    if (success && mapLoaded) return t('lastUpdated', { timestamp: getDisplayTime(data.timestamp) });
+    if (error) return t('error');
+    return null;
+  };
   return (
     <Stack id="map-container" direction="vertical">
       <div id="map-wrapper" className={classNames({ error })}>
-        <div id="map" className={classNames({ loading: !mapLoaded && !error, shrink: showInfo, error })} />
-        { !mapLoaded && !error && (
+        <div id="map" className={classNames({ loading: loading && !error, shrink: showInfo, error })} />
+        { loading && !error && (
         <div className="d-flex justify-content-center align-items-center">
           <div>
             <Spinner animation="border" variant="secondary" size="lg" />
@@ -110,16 +117,12 @@ const MapContainer = ({ t }) => {
         <StoreInfo mobile />
         <MapFilter />
       </div>
-      { (error || (mapLoaded && !!data)) && (
       <Stack as={Container} fluid direction="horizontal" className={`justify-content-end small text-end text-${error ? 'danger' : 'success'}`}>
-        <div>
-          {error ? t('error') : t('lastUpdated', { timestamp: getDisplayTime(data.timestamp) })}
-        </div>
-        <Button variant="link" className="link-primary refresh-btn" onClick={refetch} size="sm">
+        <div>{getStatus()}</div>
+        <Button variant="link" className="link-primary refresh-btn" onClick={refetch} size="sm" disabled={isFetching}>
           <Icon type="arrow-clockwise" className="fs-6" />
         </Button>
       </Stack>
-      ) }
     </Stack>
   );
 };
