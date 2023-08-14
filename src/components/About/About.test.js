@@ -8,7 +8,7 @@ describe('About Component', () => {
       <About />,
     );
     expect(getByText('關於香港壽司郎等侯組數地圖')).toBeInTheDocument();
-    expect(getByText('本網站引用香港壽司郎官方應用程式的資料，顯示各分店的等待組數，由香港壽司郎的愛好者個人經營。')).toBeInTheDocument();
+    expect(getByText('本網站引用香港壽司郎官方應用程式的資料，顯示各分店的等侯組數，由香港壽司郎的愛好者個人經營。')).toBeInTheDocument();
   });
 
   it('renders disclaimer list correctly', () => {
