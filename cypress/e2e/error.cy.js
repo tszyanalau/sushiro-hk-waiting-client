@@ -1,9 +1,8 @@
+const { onBeforeLoad } = require('../helper').default;
+
 describe('Google Map Test', () => {
   beforeEach(() => {
-    cy.window().then((win) => {
-      win.localStorage.setItem('i18nextLng', 'zh-HK');
-    });
-    cy.visit('/');
+    cy.visit('/', { onBeforeLoad });
   });
 
   it('should not load google map but error components after API fetch error', () => {

@@ -1,6 +1,4 @@
-const data = require('../../src/mockData/store.json');
-
-const mockResponseBody = { body: { ...data, timestamp: 1691312155034 } };
+const { onBeforeLoad, mockResponseBody } = require('../helper').default;
 
 const verifyResponseBody = (interception) => {
   expect(interception.response.statusCode).to.equal(200);
@@ -24,11 +22,8 @@ const verifyResponseBody = (interception) => {
 
 describe('API Fetch Test', () => {
   beforeEach(() => {
-    cy.window().then((win) => {
-      win.localStorage.setItem('i18nextLng', 'zh-HK');
-    });
     cy.intercept('GET', `${Cypress.env('apiUrl')}/store`, mockResponseBody).as('apiRequest');
-    cy.visit('/');
+    cy.visit('/', { onBeforeLoad });
   });
 
   it('should trigger an API fetch on load', () => {
@@ -36,21 +31,18 @@ describe('API Fetch Test', () => {
   });
 
   it('should trigger an API fetch after clicking on the button on navbar', () => {
-    cy.visit('/');
     cy.wait(5000);
     cy.get('.navbar-nav .refresh-btn').click();
     cy.wait('@apiRequest').then(verifyResponseBody);
   });
 
   it('should trigger an API fetch after clicking on the button under map', () => {
-    cy.visit('/');
     cy.wait(5000);
     cy.get('#map-container .refresh-btn').click();
     cy.wait('@apiRequest').then(verifyResponseBody);
   });
 
   it('should trigger an API fetch after clicking on the refresh button on info container', () => {
-    cy.visit('/');
     cy.wait(5000);
     cy.contains('18').click();
     cy.get('[role="dialog"].offcanvas-end .refresh-btn').click();

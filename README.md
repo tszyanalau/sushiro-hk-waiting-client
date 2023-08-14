@@ -115,6 +115,12 @@ To run the E2E tests, use the following command:
 npm run cypress
 ```
 
+To run the tests locally, run the app on localhost and run the following command:
+
+```bash
+npm run cypress-local
+```
+
 ## Deployment
 
 ### Continuous Integration and Continuous Deployment (CI/CD)

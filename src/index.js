@@ -8,6 +8,7 @@ import App from './App';
 import Disclaimer from './Disclaimer';
 import ErrorBoundary from './ErrorBoundary';
 import reportWebVitals from './reportWebVitals';
+import { handleDOMChange } from './service/lang';
 import store from './store';
 import i18n from './i18n';
 import './scss/index.scss';
@@ -28,14 +29,8 @@ const router = createBrowserRouter([
   },
 ]);
 
-const i18nLangToLangAttr = {
-  ja: 'ja',
-  'zh-HK': 'zh',
-};
-
 // handle index.html translation
-document.querySelector('html').setAttribute('lang', i18nLangToLangAttr[i18n.language]);
-document.querySelector('title').innerHTML = i18n.t('appName');
+handleDOMChange(i18n.language);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

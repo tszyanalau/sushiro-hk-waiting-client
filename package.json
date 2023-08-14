@@ -39,8 +39,9 @@
     "lint": "eslint src --ext js",
     "jest": "react-scripts test --watchAll=false",
     "cypress": "cypress run --headless",
-    "cypress:open": "cypress open",
-    "test": "npm run lint && npm run jest && npm run cypress",
+    "cypress-local": "cypress run --headless --config baseUrl=http://localhost:3000",
+    "cypress:open": "cypress open --config baseUrl=http://localhost:3000",
+    "test": "npm run lint && npm run jest && npm run cypress-local",
     "prepare": "husky install"
   },
   "eslintConfig": {

@@ -1,14 +1,11 @@
-const data = require('../../src/mockData/store.json');
+const { onBeforeLoad, mockResponseBody } = require('../helper').default;
 
-const mockResponse = { delay: 1000, body: { ...data, timestamp: 1691312155034 } };
+const mockResponse = { delay: 1000, ...mockResponseBody };
 
 describe('Google Map Test', () => {
   beforeEach(() => {
-    cy.window().then((win) => {
-      win.localStorage.setItem('i18nextLng', 'zh-HK');
-    });
     cy.intercept('GET', `${Cypress.env('apiUrl')}/store`, mockResponse).as('apiRequest');
-    cy.visit('/');
+    cy.visit('/', { onBeforeLoad });
   });
 
   it('should not load google map but loading components before API fetch', () => {
@@ -16,6 +13,8 @@ describe('Google Map Test', () => {
     cy.get('#map-filter').should('not.exist');
     cy.get('.spinner-border').should('exist');
     cy.get('.navbar-nav .refresh-btn').should('have.class', 'disabled');
+    cy.contains('zh').should('have.class', 'disabled');
+    cy.contains('ja').should('have.class', 'disabled');
   });
 
   it('should load google map and related components after API fetch', () => {

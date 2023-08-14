@@ -18,11 +18,19 @@ _.reduce(config.languages, (result, lang) => {
   return result;
 }, resources);
 
+let defaultLanguage = localStorage.getItem('i18nextLng') || navigator.language;
+
+// set default language if the detected language is not handled
+if (!config.languages.includes(defaultLanguage)) {
+  [defaultLanguage] = config.languages;
+}
+
 i18n
   .use(detector)
   .use(initReactI18next)
   .init({
     resources,
+    lng: defaultLanguage,
     fallbackLng: config.languages[0],
     interpolation: {
       escapeValue: false,
