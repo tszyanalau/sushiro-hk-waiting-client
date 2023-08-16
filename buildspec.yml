@@ -11,12 +11,14 @@ phases:
     commands:
       - npm run lint
       - npm run jest
-      - npm run cypress
   build:
     commands:
       - npm run build
   post_build:
     commands:
+      - aws s3 sync dist/ s3://sushiro-hk-waiting-client-testing
+      - npm run cypress
+      - aws s3 rm s3://sushiro-hk-waiting-client-testing --recursive
       - aws s3 rm s3://sushirowaiting-map.tszyanalau.com --recursive
 artifacts:
   files:
