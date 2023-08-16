@@ -28,6 +28,8 @@ module.exports = {
   },
   globals: {
     google: 'readonly',
+    cy: 'readonly',
+    Cypress: 'readonly',
   },
   rules: {
     'no-unused-vars': 'warn',
@@ -43,8 +45,18 @@ module.exports = {
     'react/prop-types': 0,
     'react/jsx-filename-extension': 0,
     'no-new': 0,
+    'no-console': 0,
+    'no-plusplus': 0,
+    'arrow-body-style': 'off',
+    'no-param-reassign': 0,
+    'react/no-array-index-key': 0,
+    'react/jsx-props-no-spreading': 0,
+    'react/no-danger': 0,
+    'import/no-dynamic-require': 'warn',
+    'global-require': 'warn',
   },
   plugins: [
     'jest',
+    'cypress',
   ],
 };
