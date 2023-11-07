@@ -23,7 +23,7 @@ This web application provides real-time updates on the number of waiting groups 
 
 ## Demo
 
-[Live Demo](http://sushirowaiting-map.tszyanalau.com) - Check out the live demo of the application.
+[Live Demo](http://sushirowaiting-map.tszyanalau.com) - Check out the live demo of the application (currently usinig mock data).
 
 ## Features
 
